@@ -42,6 +42,12 @@ variable "subnet_id" {
   description = "VPC subnet to launch instance into"
 }
 
+variable "user" {
+  type = "string"
+  description = "Username for connecting to server for remote-exec"
+  default = "root"
+}
+
 variable "vpc_security_group_ids" {
   type        = "list"
   description = "List of security group IDs to associate instances with (VPC only)"
@@ -66,7 +72,7 @@ resource "aws_instance" "consul" {
   connection {
     type        = "ssh"
     private_key = "${file("${var.key_path}")}"
-    user        = "root"
+    user        = "${var.user}"
     timeout     = "2m"
   }
 
