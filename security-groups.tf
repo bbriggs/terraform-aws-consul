@@ -37,17 +37,6 @@ variable "region" {
   description = "AWS region for deploying Consul nodes"
 }
 
-variable "subnet_id" {
-  type        = "string"
-  description = "VPC subnet to launch instance into"
-}
-
-variable "user" {
-  type        = "string"
-  description = "Username for connecting to server for remote-exec"
-  default     = "root"
-}
-
 variable "vpc" {
   type        = "string"
   description = "VPC in which to deploy Consul"
