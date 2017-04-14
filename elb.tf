@@ -19,7 +19,7 @@ variable "private_subnets" {
 
 resource "aws_elb" "consul" {
   name               = "${var.prefix}servers-elb"
-  availability_zones = "${var.availability_zones}"
+  subnets            = "${var.private_subnets}"
 
   listener {
     instance_port     = 8300
