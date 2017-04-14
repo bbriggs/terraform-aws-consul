@@ -1,13 +1,13 @@
-#!/usr/bin/env bash
-set -e
+[Unit]
+Description=consul agent
+Requires=network-online.target
+After=network-online.target
 
-sudo iptables -I INPUT -s 0/0 -p tcp --dport 8300 -j ACCEPT
-sudo iptables -I INPUT -s 0/0 -p tcp --dport 8301 -j ACCEPT
-sudo iptables -I INPUT -s 0/0 -p tcp --dport 8302 -j ACCEPT
-sudo iptables -I INPUT -s 0/0 -p tcp --dport 8400 -j ACCEPT
+[Service]
+EnvironmentFile=-/etc/sysconfig/consul
+Restart=on-failure
+ExecStart=/usr/local/bin/consul agent $CONSUL_FLAGS -config-dir=/etc/systemd/system/consul.d
+ExecReload=/bin/kill -HUP $MAINPID
 
-if [ -d /etc/sysconfig ]; then
-  sudo iptables-save | sudo tee /etc/sysconfig/iptables
-else
-  sudo iptables-save | sudo tee /etc/iptables.rules
-fi
+[Install]
+WantedBy=multi-user.target

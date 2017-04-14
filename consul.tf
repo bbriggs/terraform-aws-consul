@@ -127,21 +127,41 @@ resource "aws_security_group_rule" "allow_all_outbound" {
   protocol = "-1"
   security_group_id = "${aws_security_group.consul.id}"
 }
-resource "aws_instance" "consul" {
-  count                  = "${var.num_instances}"
-  ami                    = "${var.ami}"
-  availability_zone      = "${var.region}"
-  instance_type          = "${var.instance_type}"
-  key_name               = "${var.key_name}"
-  subnet_id              = "${var.subnet_id}"
-  vpc_security_group_ids = ["${aws_security_group.consul.id}"]
 
-  connection {
-    type        = "ssh"
-    private_key = "${file("${var.key_path}")}"
-    user        = "${var.user}"
-    timeout     = "2m"
-  }
+resource "iam_instance_profile" "consul" {
+}
+
+resource "aws_launch_configuration" "consul-seed" {
+    name_prefix = "${var.prefix}"
+    user_data   = "${data.template_file.consul-seed-userdata.rendered}"
+    image_id    = "${var.ami}"
+    instance_type = "${var.instance_type}"
+    key_name = "${var.key_name}"
+    security_groups = ["${aws_security_group.consul.id}", "${var.security_groups}"]
+    iam_instance_profile = "${aws_iam_instance_profile.consul.id}"
+
+    lifecyle {
+	create_before_destroy = true
+    }
+}
+
+resource "aws_autoscaling_group" "consul-seed" {
+  name = "${var.prefix}seed"
+  max_size = "1"
+  min_size = "1"
+  desired_capacity = "1"
+  health_check_grace_period = 300
+  health_check_tye = "EC2"
+  launch_configuration = "${aws_launch_configuration.consul-seed.id}"
+  load_balancers = ["${aws_elb.consul-seed.id}"]
+  vpc_zone_identifier = ["${var.private_subnets}"]
+
+  lifecycle {
+	  create_before_destroy = true
+	}
+}
+
+
 
   provisioner "file" {
     source      = "${path.module}/scripts/debian_upstart.conf"
