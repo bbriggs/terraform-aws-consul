@@ -104,7 +104,7 @@ resource "aws_security_group_rule" "consul_http_api" {
   to_port           = "8500"
   protocol          = "tcp"
   security_group_id = "${aws_security_group.consul.id}"
-  cidr_blocks       = ['0.0.0.0/0']
+  cidr_blocks       = ["0.0.0.0/0"]
 }
 
 resource "aws_security_group_rule" "consul_dns_interface" {
