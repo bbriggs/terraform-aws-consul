@@ -43,9 +43,9 @@ variable "subnet_id" {
 }
 
 variable "user" {
-  type = "string"
+  type        = "string"
   description = "Username for connecting to server for remote-exec"
-  default = "root"
+  default     = "root"
 }
 
 variable "vpc" {
@@ -61,69 +61,69 @@ provider "aws" {
 resource "aws_security_group" "consul" {
   name_prefix = "${var.prefix}"
   description = "Allow consul traffic"
-  vpc_id = "${var.vpc}"
+  vpc_id      = "${var.vpc}"
 }
 
 resource "aws_security_group_rule" "ssh" {
-  type            = "ingress"
-  from_port       = 22
-  to_port         = 22
-  protocol        = "tcp"
+  type              = "ingress"
+  from_port         = 22
+  to_port           = 22
+  protocol          = "tcp"
   security_group_id = "${aws_security_group.consul.id}"
 }
 
 resource "aws_security_group_rule" "consul_rpc" {
-  type = "ingress"
-  from_port = "8300"
-  to_port = "8300"
-  protocol = "tcp"
+  type              = "ingress"
+  from_port         = "8300"
+  to_port           = "8300"
+  protocol          = "tcp"
   security_group_id = "${aws_security_group.consul.id}"
 }
 
 resource "aws_security_group_rule" "consul_serf_lan" {
-  type = "ingress"
-  from_port = "8301"
-  to_port = "8301"
-  protocol = "all"
+  type              = "ingress"
+  from_port         = "8301"
+  to_port           = "8301"
+  protocol          = "all"
   security_group_id = "${aws_security_group.consul.id}"
 }
 
 resource "aws_security_group_rule" "consul_serf_wan" {
-  type = "ingress"
-  from_port = "8302"
-  to_port = "8302"
-  protocol = "all"
+  type              = "ingress"
+  from_port         = "8302"
+  to_port           = "8302"
+  protocol          = "all"
   security_group_id = "${aws_security_group.consul.id}"
 }
 
 resource "aws_security_group_rule" "consul_cli_rpc" {
-  type = "ingress"
-  from_port = "8400"
-  to_port = "8400"
-  protocol = "tcp"
+  type              = "ingress"
+  from_port         = "8400"
+  to_port           = "8400"
+  protocol          = "tcp"
   security_group_id = "${aws_security_group.consul.id}"
 }
 
 resource "aws_security_group_rule" "consul_http_api" {
-  type = "ingress"
-  from_port = "8500"
-  to_port = "8500"
-  protocol = "tcp"
+  type              = "ingress"
+  from_port         = "8500"
+  to_port           = "8500"
+  protocol          = "tcp"
   security_group_id = "${aws_security_group.consul.id}"
 }
 
 resource "aws_security_group_rule" "consul_dns_interface" {
-  type = "ingress"
-  from_port = "8600"
-  to_port = "8600"
-  protocol = "all"
+  type              = "ingress"
+  from_port         = "8600"
+  to_port           = "8600"
+  protocol          = "all"
   security_group_id = "${aws_security_group.consul.id}"
 }
 
 resource "aws_security_group_rule" "allow_all_outbound" {
-  type = "egress"
-  from_port = "0"
-  to_port = "0"
-  protocol = "-1"
+  type              = "egress"
+  from_port         = "0"
+  to_port           = "0"
+  protocol          = "-1"
   security_group_id = "${aws_security_group.consul.id}"
 }
