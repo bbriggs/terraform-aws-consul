@@ -59,6 +59,7 @@ resource "aws_security_group_rule" "ssh" {
   to_port           = 22
   protocol          = "tcp"
   security_group_id = "${aws_security_group.consul.id}"
+  self = true
 }
 
 resource "aws_security_group_rule" "consul_rpc" {
@@ -67,6 +68,7 @@ resource "aws_security_group_rule" "consul_rpc" {
   to_port           = "8300"
   protocol          = "tcp"
   security_group_id = "${aws_security_group.consul.id}"
+  self = true
 }
 
 resource "aws_security_group_rule" "consul_serf_lan" {
@@ -75,6 +77,7 @@ resource "aws_security_group_rule" "consul_serf_lan" {
   to_port           = "8301"
   protocol          = "all"
   security_group_id = "${aws_security_group.consul.id}"
+  self = true
 }
 
 resource "aws_security_group_rule" "consul_serf_wan" {
@@ -83,6 +86,7 @@ resource "aws_security_group_rule" "consul_serf_wan" {
   to_port           = "8302"
   protocol          = "all"
   security_group_id = "${aws_security_group.consul.id}"
+  self = true
 }
 
 resource "aws_security_group_rule" "consul_cli_rpc" {
@@ -91,6 +95,7 @@ resource "aws_security_group_rule" "consul_cli_rpc" {
   to_port           = "8400"
   protocol          = "tcp"
   security_group_id = "${aws_security_group.consul.id}"
+  self = true
 }
 
 resource "aws_security_group_rule" "consul_http_api" {
@@ -99,6 +104,7 @@ resource "aws_security_group_rule" "consul_http_api" {
   to_port           = "8500"
   protocol          = "tcp"
   security_group_id = "${aws_security_group.consul.id}"
+  cidr_blocks       = ['0.0.0.0/0']
 }
 
 resource "aws_security_group_rule" "consul_dns_interface" {
@@ -107,6 +113,7 @@ resource "aws_security_group_rule" "consul_dns_interface" {
   to_port           = "8600"
   protocol          = "all"
   security_group_id = "${aws_security_group.consul.id}"
+  self = true
 }
 
 resource "aws_security_group_rule" "allow_all_outbound" {
