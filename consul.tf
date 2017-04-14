@@ -129,12 +129,10 @@ resource "aws_security_group_rule" "allow_all_outbound" {
 }
 resource "aws_instance" "consul" {
   count                  = "${var.num_instances}"
-  name                   = "${var.prefix}${count.index + 1}"
   ami                    = "${var.ami}"
   availability_zone      = "${var.region}"
   instance_type          = "${var.instance_type}"
   key_name               = "${var.key_name}"
-  region                 = "${var.region}"
   subnet_id              = "${var.subnet_id}"
   vpc_security_group_ids = ["${aws_security_group.consul.id}"]
 
