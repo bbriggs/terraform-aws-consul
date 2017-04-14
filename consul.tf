@@ -120,6 +120,13 @@ resource "aws_security_group_rule" "consul_dns_interface" {
   security_group_id = "${aws_security_group.consul.id}"
 }
 
+resource "aws_security_group_rule" "allow_all_outbound" {
+  type = "egress"
+  from_port = "0"
+  to_port = "0"
+  protocol = "-1"
+  security_group_id = "${aws_security_group.consul.id}"
+}
 resource "aws_instance" "consul" {
   count                  = "${var.num_instances}"
   name                   = "${var.prefix}${count.index + 1}"
