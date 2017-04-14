@@ -5,6 +5,11 @@ variable "availability_zones" {
   description = "list of availability zones to use for ELBs"
 }
 
+variable "security_groups" {
+  type = "list"
+  description = "List of additional security groups for the consul cluster"
+}
+
 #######################################
 
 resource "aws_elb" "consul" {
