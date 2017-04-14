@@ -10,7 +10,6 @@ else
   sudo yum install -y unzip wget
 fi
 
-
 echo "Fetching Consul..."
 CONSUL=0.7.0
 cd /tmp
@@ -27,6 +26,7 @@ sudo mkdir -p /etc/systemd/system/consul.d
 sudo chown root:root /tmp/consul.service
 sudo mv /tmp/consul.service /etc/systemd/system/consul.service
 sudo chmod 0644 /etc/systemd/system/consul.service
+sudo mkdir -p /etc/sysconfig/consul
 sudo chown root:root /etc/sysconfig/consul
 sudo chmod 0644 /etc/sysconfig/consul
 
