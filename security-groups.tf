@@ -122,4 +122,5 @@ resource "aws_security_group_rule" "allow_all_outbound" {
   to_port           = "0"
   protocol          = "-1"
   security_group_id = "${aws_security_group.consul.id}"
+  cidr_blocks       = ["0.0.0.0/0"]
 }
