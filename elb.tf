@@ -67,6 +67,7 @@ resource "aws_iam_role" "consul" {
 resource "iam_instance_profile" "consul" {
   name  = "${var.prefix}consul"
   roles = ["${aws_iam_role.consul.name}"]
+  depends_on = ["aws_iam_role.consul"]
 }
 
 data "template_file" "consul-userdata" {
