@@ -64,7 +64,7 @@ resource "aws_iam_role" "consul" {
   assume_role_policy = "${file("${path.module}/policies/role-ec2.json")}"
 }
 
-resource "iam_instance_profile" "consul" {
+resource "aws_iam_instance_profile" "consul" {
   name  = "${var.prefix}consul"
   roles = ["${aws_iam_role.consul.name}"]
   depends_on = ["aws_iam_role.consul"]
