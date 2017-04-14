@@ -10,6 +10,11 @@ variable "security_groups" {
   description = "List of additional security groups for the consul cluster"
 }
 
+variable "private_subnets" {
+  type = "list"
+  description = "Subnets ELB should deploy servers into"
+}
+
 #######################################
 
 resource "aws_elb" "consul" {
