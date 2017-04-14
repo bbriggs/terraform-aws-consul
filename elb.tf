@@ -31,7 +31,7 @@ resource "aws_elb" "consul" {
   listener {
     instance_port     = 8301
     instance_protocol = "tcp"
-    lb_port           = 8300
+    lb_port           = 8301
     lb_protocol       = "tcp"
   }
 
