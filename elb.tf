@@ -83,7 +83,7 @@ resource "aws_iam_instance_profile" "consul" {
 data "template_file" "consul-userdata" {
   template = "${file("${path.module}/templates/bootstrap.sh.tmpl")}"
 
-  variables {
+  vars {
     prefix = "${var.prefix}"
     region = "${var.region}"
   }
