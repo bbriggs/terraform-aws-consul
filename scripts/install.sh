@@ -3,7 +3,6 @@ set -e
 
 echo "Installing dependencies..."
 
-
 if [ -x "$(command -v apt-get)" ]; then
   sudo apt-get update -y
   sudo apt-get install -y unzip jq python-pip
@@ -12,7 +11,7 @@ else
   sudo yum install -y unzip wget jq python-pip
 fi
 
-pip install --upgrade awscli
+sudo pip install --upgrade awscli
 echo "Fetching Consul..."
 CONSUL=0.7.0
 cd /tmp
