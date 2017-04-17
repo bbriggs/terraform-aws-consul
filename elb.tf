@@ -122,4 +122,10 @@ resource "aws_autoscaling_group" "consul-servers" {
   lifecycle {
     create_before_destroy = true
   }
+
+  tag {
+    key                 = "Name"
+    value               = "consul"
+    propagate_at_launch = true
+  }
 }
