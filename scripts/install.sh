@@ -27,5 +27,7 @@ sudo mv /tmp/consul.service /etc/systemd/system/consul.service
 sudo chmod 0644 /etc/systemd/system/consul.service
 sudo mkdir -p /etc/sysconfig/consul
 sudo chown root:root /etc/sysconfig/consul
-sudo chmod 0644 /etc/sysconfig/consul
-
+sudo chmod 00644 /etc/sysconfig/consul
+sudo mkdir -p /etc/consul
+sudo chown root:root /etc/consul
+sudo chmod 0644 /etc/consul
