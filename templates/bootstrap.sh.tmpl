@@ -1,4 +1,8 @@
 #!/bin/bash
+set -e
+
+pip install -U pip
+pip install -U awscli
 
 internalIP=$(curl http://169.254.169.254/latest/meta-data/local-ipv4)
 instanceID=$(curl http://169.254.169.254/latest/meta-data/instance-id)

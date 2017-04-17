@@ -1,6 +1,5 @@
 #!/usr/bin/env bash
 set -e
-
 echo "Installing dependencies..."
 
 if [ -x "$(command -v apt-get)" ]; then
@@ -10,8 +9,6 @@ else
   sudo yum update -y
   sudo yum install -y unzip wget jq python-pip
 fi
-
-sudo pip install --upgrade awscli
 echo "Fetching Consul..."
 CONSUL=0.7.0
 cd /tmp
