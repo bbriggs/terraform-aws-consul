@@ -19,7 +19,7 @@
     },
     "instance_type": "m3.medium",
     "ssh_username": "ubuntu",
-    "ami_name": "consul-{{timestamp}}"
+    "ami_name": "consul-{{isotime | clean_ami_name}}"
   }],
   "provisioners": [{
 	  "type": "file",
