@@ -6,20 +6,20 @@ variable "availability_zones" {
 }
 
 variable "security_groups" {
-  type = "list"
+  type        = "list"
   description = "List of additional security groups for the consul cluster"
 }
 
 variable "private_subnets" {
-  type = "list"
+  type        = "list"
   description = "Subnets ELB should deploy servers into"
 }
 
 #######################################
 
 resource "aws_elb" "consul" {
-  name               = "${var.prefix}servers-elb"
-  subnets            = ["${var.private_subnets}"]
+  name    = "${var.prefix}servers-elb"
+  subnets = ["${var.private_subnets}"]
 
   listener {
     instance_port     = 8300
@@ -74,9 +74,14 @@ resource "aws_iam_role" "consul" {
   assume_role_policy = "${file("${path.module}/policies/role-ec2.json")}"
 }
 
+resource "aws_iam_role_policy_attachment" "ec2-read-only" {
+  role       = "${aws_iam_role.consul.name}"
+  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess"
+}
+
 resource "aws_iam_instance_profile" "consul" {
-  name  = "${var.prefix}consul"
-  roles = ["${aws_iam_role.consul.name}"]
+  name       = "${var.prefix}consul"
+  roles      = ["${aws_iam_role.consul.name}"]
   depends_on = ["aws_iam_role.consul"]
 }
 
