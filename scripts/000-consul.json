@@ -1,0 +1,4 @@
+{
+    "server": true,
+    "data_dir": "/opt/consul/data"
+}

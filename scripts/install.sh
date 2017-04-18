@@ -10,9 +10,9 @@ else
   sudo yum install -y unzip wget jq python-pip
 fi
 echo "Fetching Consul..."
-CONSUL=0.7.0
+CONSUL=0.8.0
 cd /tmp
-wget https://releases.hashicorp.com/consul/0.7.0/consul_0.7.0_linux_amd64.zip -O consul.zip --quiet
+wget https://releases.hashicorp.com/consul/${CONSUL}/consul_${CONSUL}_linux_amd64.zip -O consul.zip --quiet
 
 echo "Installing Consul..."
 unzip consul.zip >/dev/null
@@ -25,9 +25,10 @@ sudo mkdir -p /etc/systemd/system/consul.d
 sudo chown root:root /tmp/consul.service
 sudo mv /tmp/consul.service /etc/systemd/system/consul.service
 sudo chmod 0644 /etc/systemd/system/consul.service
-sudo mkdir -p /etc/sysconfig/consul
-sudo chown root:root /etc/sysconfig/consul
-sudo chmod 00644 /etc/sysconfig/consul
+echo "Creating config dir..."
 sudo mkdir -p /etc/consul
 sudo chown root:root /etc/consul
-sudo chmod 0644 /etc/consul
+sudo mkdir -p /etc/sysconfig/consul
+sudo chmod 00644 /etc/sysconfig/consul
+sudo mkdir -p /etc/consul
+sudo mv /tmp/000-consul.json /etc/sysconfig/consul/000-consul.json

@@ -27,8 +27,14 @@
 	  "destination": "/tmp/consul.service"
   },
   {
+    "type": "file",
+    "source":"../scripts/000-consul.json",
+    "destination":"/tmp/000-consul.json"
+  },
+  {
     "type": "shell",
     "scripts": ["../scripts/install.sh", "../scripts/ip_tables.sh"]
-  }]
+  }
+  ]
 
 }
