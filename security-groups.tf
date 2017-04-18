@@ -63,7 +63,7 @@ resource "aws_security_group_rule" "consul_rpc" {
   to_port           = "8300"
   protocol          = "tcp"
   security_group_id = "${aws_security_group.consul.id}"
-  self              = true
+  cidr_blocks       = ["0.0.0.0/0"]
 }
 
 resource "aws_security_group_rule" "consul_serf_lan" {
@@ -91,15 +91,6 @@ resource "aws_security_group_rule" "consul_cli_rpc" {
   protocol          = "tcp"
   security_group_id = "${aws_security_group.consul.id}"
   self              = true
-}
-
-resource "aws_security_group_rule" "consul_http_api" {
-  type              = "ingress"
-  from_port         = "8500"
-  to_port           = "8500"
-  protocol          = "tcp"
-  security_group_id = "${aws_security_group.consul.id}"
-  cidr_blocks       = ["0.0.0.0/0"]
 }
 
 resource "aws_security_group_rule" "consul_dns_interface" {
