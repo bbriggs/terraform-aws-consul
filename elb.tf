@@ -70,7 +70,7 @@ resource "aws_elb" "consul" {
 }
 
 resource "aws_iam_role" "consul" {
-  name               = "${var.prefix}consul"
+  name               = "${var.prefix}-iam-role"
   assume_role_policy = "${file("${path.module}/policies/role-ec2.json")}"
 }
 
@@ -80,7 +80,7 @@ resource "aws_iam_role_policy_attachment" "ec2-read-only" {
 }
 
 resource "aws_iam_instance_profile" "consul" {
-  name       = "${var.prefix}consul"
+  name       = "${var.prefix}-iam-instance-profile"
   roles      = ["${aws_iam_role.consul.name}"]
   depends_on = ["aws_iam_role.consul"]
 }
@@ -94,7 +94,7 @@ data "template_file" "consul-userdata" {
   }
 }
 
-resource "aws_launch_configuration" "consul" {
+resource "aws_launch_configuration" "consul-lc" {
   name_prefix          = "${var.prefix}"
   user_data            = "${data.template_file.consul-userdata.rendered}"
   image_id             = "${var.ami}"
@@ -109,13 +109,13 @@ resource "aws_launch_configuration" "consul" {
 }
 
 resource "aws_autoscaling_group" "consul-servers" {
-  name                      = "${var.prefix}seed"
+  name                      = "${var.prefix}-asg"
   max_size                  = "${var.num_instances}"
   min_size                  = "${var.num_instances}"
   desired_capacity          = "${var.num_instances}"
   health_check_grace_period = "300"
   health_check_type         = "EC2"
-  launch_configuration      = "${aws_launch_configuration.consul.id}"
+  launch_configuration      = "${aws_launch_configuration.consul-lc.id}"
   load_balancers            = ["${aws_elb.consul.id}"]
   vpc_zone_identifier       = ["${var.private_subnets}"]
 
