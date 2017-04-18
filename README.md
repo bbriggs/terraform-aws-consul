@@ -1,7 +1,7 @@
 # terraform-aws-consul
 Terraform module for deploying a consul cluster on AWS
 
-Mostly borrowed from Hashicorp's Terraform examples for Consul
+Mostly borrowed from Hashicorp's Terraform examples for Consul and http://engineering.skybettingandgaming.com/2016/05/05/aws-and-consul/
 
 ## Usage
 
@@ -27,7 +27,7 @@ data "aws_ami" "ubuntu-consul" {
     values = ["hvm"]
   }
 
-  owners = ["${var.you_aws_account_id}"]
+  owners = ["${var.your_aws_account_id}"]
 }
 
 module "consul" {
