@@ -78,7 +78,7 @@ resource "aws_elb" "consul" {
 }
 
 resource "aws_iam_role" "consul" {
-  name               = "${var.prefix}-iam-role"
+  name               = "${var.prefix}iam-role"
   assume_role_policy = "${file("${path.module}/policies/role-ec2.json")}"
 }
 
@@ -88,7 +88,7 @@ resource "aws_iam_role_policy_attachment" "ec2-read-only" {
 }
 
 resource "aws_iam_instance_profile" "consul" {
-  name       = "${var.prefix}-iam-instance-profile"
+  name       = "${var.prefix}iam-instance-profile"
   roles      = ["${aws_iam_role.consul.name}"]
   depends_on = ["aws_iam_role.consul"]
 }
@@ -117,7 +117,7 @@ resource "aws_launch_configuration" "consul-lc" {
 }
 
 resource "aws_autoscaling_group" "consul-servers" {
-  name                      = "${var.prefix}-asg"
+  name                      = "${var.prefix}asg"
   max_size                  = "${var.num_instances}"
   min_size                  = "${var.num_instances}"
   desired_capacity          = "${var.num_instances}"
