@@ -1,4 +1,5 @@
 {
     "server": true,
-    "data_dir": "/opt/consul/data"
+    "data_dir": "/opt/consul/data",
+    "bind":"0.0.0.0"
 }
