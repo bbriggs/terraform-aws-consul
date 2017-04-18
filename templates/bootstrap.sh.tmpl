@@ -11,17 +11,15 @@ echo "Setting hostname..." >> /tmp/consul-bootstrap.log
 hostnamectl set-hostname $$hostname
 echo "Getting addresses of other cluster members..." >> /tmp/consul-bootstrap.log
 aws ec2 describe-instances --region ${region} --filters 'Name=tag:Name,Values=consul' 'Name=instance-state-name,Values=running' | jq -r '.Reservations[].Instances[].PrivateIpAddress' > /tmp/instances
-
 while read line;
 do
- if [ "$$line" != "$$internalIP" ]; then
-    echo "Adding address $$line"
-    cat /etc/consul/000-consul.json | jq ".retry_join += [\"$$line\"]" > /tmp/$${line}-consul.json
-
-    if [ -s /tmp/$${line}-consul.json ]; then
-        cp /tmp/$${line}-consul.json /etc/consul/000-consul.json
+  if [ "$$line" != "$$internalIP" ]; then
+    echo "Adding address $line"
+    cat /etc/sysconfig/consul/000-consul.json | jq ".retry_join += [\"$$line\"]" > /tmp/$${line}-consul.json
+    if [ -f /tmp/$${line}-consul.json ]; then
+      cp /tmp/$${line}-consul.json /etc/sysconfig/consul/000-consul.json
     fi
- fi
+  fi
 done < /tmp/instances
 
 systemctl start consul
