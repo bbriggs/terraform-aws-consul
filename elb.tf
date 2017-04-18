@@ -63,6 +63,14 @@ resource "aws_elb" "consul" {
     lb_protocol       = "tcp"
   }
 
+  health_check {
+    healthy_threshold   = 2
+    unhealthy_threshold = 2
+    timeout             = 3
+    target              = "HTTP:8500/"
+    interval            = 30
+  }
+
   cross_zone_load_balancing   = true
   idle_timeout                = 400
   connection_draining         = true
