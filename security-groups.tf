@@ -10,11 +10,6 @@ variable "instance_type" {
   description = "AWS instance type for Consul servers."
 }
 
-variable "key_path" {
-  type        = "string"
-  description = "Path to SSH key used for configuring instances"
-}
-
 variable "key_name" {
   type        = "string"
   description = "Name of SSH key to insert into machine to grant initial access"
