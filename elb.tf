@@ -67,8 +67,8 @@ resource "aws_elb" "consul" {
     healthy_threshold   = 2
     unhealthy_threshold = 2
     timeout             = 3
-    target              = "HTTP:8500/"
-    interval            = 30
+    target              = "TCP:8300"
+    interval            = 20
   }
 
   cross_zone_load_balancing   = true
