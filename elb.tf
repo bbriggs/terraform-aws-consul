@@ -75,6 +75,7 @@ resource "aws_elb" "consul" {
   idle_timeout                = 400
   connection_draining         = true
   connection_draining_timeout = 400
+  security_groups             = ["${aws_security_group.consul.id}"]
 }
 
 resource "aws_iam_role" "consul" {
