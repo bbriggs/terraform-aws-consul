@@ -63,7 +63,7 @@ resource "aws_security_group_rule" "consul_rpc" {
   to_port           = "8300"
   protocol          = "tcp"
   security_group_id = "${aws_security_group.consul.id}"
-  cidr_blocks       = ["0.0.0.0/0"]
+  self              = "true"
 }
 
 resource "aws_security_group_rule" "consul_serf_lan" {
