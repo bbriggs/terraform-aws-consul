@@ -45,3 +45,13 @@ module "consul" {
   vpc = "${data.aws_vpc.your_vpc.id}"
 }
 ```
+
+### The big catch: Freaking AWS metadata magic, yo
+
+This is a pretty straightforward module except for one thing: the userdata. Inside the userdata, we are running a small script that installs AWS cli and depends on a package called `jq` to parse our JSON response from AWS. We grab all the running instances with the Name tag set to a value of 'consul' (to be paramaterized in upcoming commits). This exposes all the other machines in the ASG and lets us find our peers. 
+
+Because this module was built with Vault in mind, the complimentary Vault module also looks for the Consul members using `aws ec2 describe-instances`.
+
+### Contributing
+
+Send PRs straight to master. YOLO. Feel free to open issues or reach out to me on Gitter in the Vault, Consul, and Terraform rooms.
