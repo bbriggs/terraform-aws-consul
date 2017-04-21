@@ -14,7 +14,7 @@ aws ec2 describe-instances --region ${region} --filters 'Name=tag:Name,Values=co
 while read line;
 do
   if [ "$$line" != "$$internalIP" ]; then
-    echo "Adding address $line"
+    echo "Adding address $$line"
     cat /etc/sysconfig/consul/000-consul.json | jq ".retry_join += [\"$$line\"]" > /tmp/$${line}-consul.json
     if [ -f /tmp/$${line}-consul.json ]; then
       cp /tmp/$${line}-consul.json /etc/sysconfig/consul/000-consul.json
