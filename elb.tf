@@ -88,9 +88,15 @@ resource "aws_iam_role_policy_attachment" "ec2-read-only" {
   policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ReadOnlyAccess"
 }
 
+resource "aws_iam_role_policy" "consul_cron" {
+  name   = "${prefix}cron"
+  role   = "${aws_iam_role.consul.id}"
+  policy = "${file("${path.module}/policies/policy-consul_cron.json")}"
+}
+
 resource "aws_iam_instance_profile" "consul" {
   name       = "${var.prefix}iam-instance-profile"
-  roles      = ["${aws_iam_role.consul.name}"]
+  role       = "${aws_iam_role.consul.name}"
   depends_on = ["aws_iam_role.consul"]
 }
 
